@@ -1,6 +1,7 @@
 NAME=IpProxyPool
 BIN_DIR=bin
 VERSION=$(shell git describe --tags || echo "unknown version")
+# -ldflags '-w -s' 压缩编译体积   -trimpath删除executable中的绝对路径，加快构建速度
 GO_BUILD=CGO_ENABLED=0 go build -trimpath -ldflags '-w -s'
 
 PLATFORM_LIST = \
@@ -22,6 +23,7 @@ PLATFORM_LIST = \
 
 all: linux-amd64 darwin-amd64
 
+# -$@的意思是当前的指令名称，比如下边的命令，最终得到的程序名为IpProxyPool-docker
 docker:
 	$(GO_BUILD) -o $(BIN_DIR)/$(NAME)-$@
 
